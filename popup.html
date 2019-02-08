@@ -1,13 +1,25 @@
 <!DOCTYPE html>
   <html>
     <head>
+      <style>
+        .root {
+          width: 256px;
+        }
+      </style>
     </head>
-    <body>
-      <h1>Hello World</h1>
+    <body class="root">
+      <a href="https://mouseflow.com">
+        <h4>Mouseflow</h4>
+      </a>
       <div id="mouseflow-data">
-        <ul>
-          <li id="mouseflow-is-recording"></li>
-        </ul>
+        <span>Recording: </span>
+        <span id="mouseflow-is-recording"></span><br><br>
+        <span>Recording Rate: </span>
+        <span id="mouseflow-recording-rate"></span><br><br>
+        <span>Website ID: </span>
+        <span id="mouseflow-website-id"></span><br><br>
+        <span>Session ID: </span>
+        <span id="mouseflow-session-id"></span><br><br>
       </div>
       <script src="popup.js"></script>
     </body>

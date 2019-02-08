@@ -1,12 +1,12 @@
-var s = document.createElement('script');
-s.src = chrome.extension.getURL('pageScript.js');
-s.onload = function() {
+var mfPageScript = document.createElement('script');
+mfPageScript.src = chrome.extension.getURL('pageScript.js');
+mfPageScript.onload = function() {
     this.remove();
 };
-(document.head || document.documentElement).appendChild(s);
+(document.head || document.documentElement).appendChild(mfPageScript);
 
-document.addEventListener('sendMouseflowData', function (e) {
+document.addEventListener('mfDataTick', function (e) {
   var data = e.detail;
-  chrome.runtime.sendMessage(data)
+  chrome.runtime.sendMessage(data);
 });
 

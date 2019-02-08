@@ -1,16 +1,23 @@
-var checkMouseflowLoaded = setInterval(function () {
+var mfWatch = setInterval(function () {
+  let mfExtensionsData;
   if (window.mouseflow) {
-    var mfExtensionsData = {
+    mfExtensionsData = {
+      isInstalled: true,
       isRecording: window.mouseflow.isRecording(),
       recordingRate: window.mouseflow.recordingRate,
       websiteId: window.mouseflow.websiteId,
       sessionId: window.mouseflow.getSessionId(),
     }
-
-    var mfExtensionEvent = document.createEvent("CustomEvent");
-    mfExtensionEvent.initCustomEvent("sendMouseflowData", true, true, mfExtensionsData);
-    document.dispatchEvent(mfExtensionEvent);
-    
-    clearInterval(checkMouseflowLoaded);
+  } else {
+    mfExtensionsData = {
+      isInstalled: false,
+      isRecording: null,
+      recordingRate: null,
+      websiteId: null,
+      sessionId: null,
+    }
   }
-},500)
+  var mfExtensionEvent = document.createEvent("CustomEvent");
+  mfExtensionEvent.initCustomEvent("mfDataTick", true, true, mfExtensionsData);
+  document.dispatchEvent(mfExtensionEvent);
+}, 500)
