@@ -2,20 +2,29 @@
   <html>
     <head>
       <link rel="stylesheet" type="text/css" href="popup.css">
+      <link href="https://fonts.googleapis.com/css?family=Open+Sans:700" rel="stylesheet">
     </head>
     <body class="root">
-      <a href="https://mouseflow.com">
-        <h4>Mouseflow</h4>
+      <a href="https://app.mouseflow.com" target="_blank">
+        <h2>Mouseflow</h2>
       </a>
-      <div id="mouseflow-data">
-        <span>Recording: </span>
+      <div id="mouseflow-not-installed" style="display: none">
+        <h4>Mouseflow does not seem to be installed on this page.</h4>
+        <span>If this seems wrong, please follow the </span>
+        <a href="http://help.mouseflow.com/knowledge_base/topics/installation-guide-1" target="_blank">
+          installation guide
+        </a><span>.</span>
+      </div>
+      <div class="box" id="mouseflow-data" style="display: none">
+        <span>RECORDING: </span>
         <span id="mouseflow-is-recording"></span><br><br>
-        <span>Recording Rate: </span>
-        <span id="mouseflow-recording-rate"></span><br><br>
-        <span>Website ID: </span>
+        <span>RATE: </span>
+        <span id="mouseflow-recording-rate"></span><span>%</span><br><br>
+        <span>WEBSITE ID: </span>
         <span id="mouseflow-website-id"></span><br><br>
-        <span>Session ID: </span>
+        <span>SESSION ID: </span>
         <span id="mouseflow-session-id"></span><br><br>
+        <a id="mouseflow-session-link" href="#" target="_blank">View Session</a>
       </div>
       <script src="popup.js"></script>
     </body>
