@@ -1,4 +1,4 @@
-var mfWatch = setInterval(function () {
+const getMouseflow = function () {
   let mfExtensionsData;
   if (window.mouseflow) {
     mfExtensionsData = {
@@ -8,6 +8,7 @@ var mfWatch = setInterval(function () {
       websiteId: window.mouseflow.websiteId,
       sessionId: window.mouseflow.getSessionId(),
     }
+    clearInterval(getMouseflow);
   } else {
     mfExtensionsData = {
       isInstalled: false,
@@ -20,4 +21,6 @@ var mfWatch = setInterval(function () {
   var mfExtensionEvent = document.createEvent("CustomEvent");
   mfExtensionEvent.initCustomEvent("mfDataTick", true, true, mfExtensionsData);
   document.dispatchEvent(mfExtensionEvent);
-}, 500)
+}
+
+var mfWatch = setInterval(getMouseflow, 500);
