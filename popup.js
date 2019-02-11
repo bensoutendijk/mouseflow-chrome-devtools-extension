@@ -21,3 +21,14 @@ chrome.runtime.onMessage.addListener(function(mf, sender) {
     }
   }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('button-copy-website-id').addEventListener('click', () => {
+    var copyText = document.getElementById("mouseflow-website-id");
+    /* Select the text field */
+    copyText.select();
+    /* Copy the text inside the text field */
+    document.execCommand("copy");
+    document.getElementById('copy-success-text').classList.add('copied');
+  });
+});

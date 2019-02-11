@@ -1,30 +1,42 @@
 <!DOCTYPE html>
   <html>
     <head>
+      <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
       <link rel="stylesheet" type="text/css" href="popup.css">
+      <script src="assets/js/bootstrap.min.js"></script>
       <link href="https://fonts.googleapis.com/css?family=Open+Sans:700" rel="stylesheet">
     </head>
-    <body class="root">
-      <a href="https://app.mouseflow.com" target="_blank">
-        <h2>Mouseflow</h2>
-      </a>
-      <div id="mouseflow-not-installed" style="display: none">
-        <h4>Mouseflow does not appear to be installed on this page.</h4>
-        <span>If this seems wrong, please refer to the </span>
-        <a href="http://help.mouseflow.com/knowledge_base/topics/installation-guide-1" target="_blank">
-          installation guide</a>
+    <body class="root container">
+      <div class="row">
+        <a href="https://app.mouseflow.com" target="_blank">
+          <h2>Mouseflow</h2>
+        </a>
       </div>
-      <div class="box" id="mouseflow-data" style="display: none">
+      <div class="row">
+          <div id="mouseflow-not-installed" style="display: none">
+            <h4>Mouseflow does not appear to be installed on this page.</h4>
+            <span>If this seems wrong, please refer to the </span>
+            <a href="http://help.mouseflow.com/knowledge_base/topics/installation-guide-1" target="_blank">
+              installation guide</a>
+          </div>
+      </div>
+      <div class="row" id="mouseflow-data" style="display: none">
         <span>RECORDING: </span>
         <span id="mouseflow-is-recording"></span><br><br>
         <span>RATE: </span>
         <span id="mouseflow-recording-rate"></span><span>%</span><br><br>
         <span>WEBSITE ID: </span>
-        <span id="mouseflow-website-id"></span><br><br>
+        <textarea id="mouseflow-website-id" rows="1" cols="34"></textarea>
+        <button id="button-copy-website-id" class="btn btn-primary">
+            <img src="images/baseline-insert_drive_file-24px.svg" alt="copy-to-clipboard">
+        </button>
+        <br><br>
+        <span id="copy-success-text" class="copy-text">Copied to clipboard!</span><br><br>
         <span>SESSION ID: </span>
         <span id="mouseflow-session-id"></span><br><br>
         <a id="mouseflow-session-link" href="#" target="_blank">View Session</a>
       </div>
       <script src="popup.js"></script>
+      
     </body>
   </html>
