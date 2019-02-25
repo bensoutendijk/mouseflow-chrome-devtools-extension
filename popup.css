@@ -24,3 +24,7 @@ textarea{
   opacity: 1;
   transition: opacity 0.5s;
 }
+
+.version-number {
+  color: black;
+}

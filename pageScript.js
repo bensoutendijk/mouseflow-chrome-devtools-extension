@@ -3,6 +3,7 @@ const getMouseflow = function () {
   if (window.mouseflow) {
     mfExtensionsData = {
       isInstalled: true,
+      version: window.mouseflow.version,
       isRecording: window.mouseflow.isRecording(),
       recordingRate: window.mouseflow.recordingRate,
       websiteId: window.mouseflow.websiteId,
@@ -12,6 +13,7 @@ const getMouseflow = function () {
   } else {
     mfExtensionsData = {
       isInstalled: false,
+      version: null,
       isRecording: null,
       recordingRate: null,
       websiteId: null,

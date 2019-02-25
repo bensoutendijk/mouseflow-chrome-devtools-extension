@@ -1,4 +1,5 @@
 var mfData = document.getElementById('mouseflow-data');
+var mfVersion = document.getElementById('mouseflow-version-number');
 var mfIsRecording = document.getElementById('mouseflow-is-recording');
 var mfRecordingRate = document.getElementById('mouseflow-recording-rate');
 var mfWebsiteId = document.getElementById('mouseflow-website-id');
@@ -10,7 +11,8 @@ var mfNotInstalled = document.getElementById('mouseflow-not-installed');
 chrome.runtime.onMessage.addListener(function(mf, sender) {
   if (sender.tab.active) {
     if(mf.isInstalled) {
-      mfIsRecording.innerText = mf.isRecording ? 'On' : 'FALSE';
+      mfVersion.innerText = mf.version;
+      mfIsRecording.innerText = mf.isRecording ? 'On' : 'Off';
       mfRecordingRate.innerText = mf.recordingRate;
       mfWebsiteId.innerText = mf.websiteId;
       mfSessionId.innerText = mf.sessionId;
