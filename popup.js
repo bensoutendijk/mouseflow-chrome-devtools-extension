@@ -9,19 +9,22 @@ var sessionLink = document.getElementById('mouseflow-session-link')
 var mfNotInstalled = document.getElementById('mouseflow-not-installed');
 
 chrome.runtime.onMessage.addListener(function(mf, sender) {
-  if (sender.tab.active) {
-    if(mf.isInstalled) {
-      mfVersion.innerText = mf.version;
-      mfIsRecording.innerText = mf.isRecording ? 'On' : 'Off';
-      mfRecordingRate.innerText = mf.recordingRate;
-      mfWebsiteId.innerText = mf.websiteId;
-      mfSessionId.innerText = mf.sessionId;
-      sessionLink.href = `https://app.mouseflow.com/websites/${mf.websiteId}/recordings/${mf.sessionId}/play`;
-      mfData.style = 'display: block';
-    } else {
-      mfNotInstalled.style = "display: block";
+  chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
+    const activeTab = tabs[0];
+    if (sender.tab.id === activeTab.id) {
+      if(mf.isInstalled) {
+        mfVersion.innerText = mf.version;
+        mfIsRecording.innerText = mf.isRecording ? 'On' : 'Off';
+        mfRecordingRate.innerText = mf.recordingRate;
+        mfWebsiteId.innerText = mf.websiteId;
+        mfSessionId.innerText = mf.sessionId;
+        sessionLink.href = `https://app.mouseflow.com/websites/${mf.websiteId}/recordings/${mf.sessionId}/play`;
+        mfData.style = 'display: block';
+      } else {
+        mfNotInstalled.style = "display: block";
+      }
     }
-  }
+  });
 });
 
 document.addEventListener('DOMContentLoaded', function() {
