@@ -8,6 +8,7 @@ const getMouseflow = function () {
       recordingRate: window.mouseflow.recordingRate,
       websiteId: window.mouseflow.websiteId,
       sessionId: window.mouseflow.getSessionId(),
+      documentHost: document.location.host,
     }
     clearInterval(getMouseflow);
   } else {

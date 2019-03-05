@@ -7,12 +7,20 @@ var mfSessionId = document.getElementById('mouseflow-session-id');
 var mfViewRecordingLink = document.getElementById('mouseflow-view-recording-link');
 var sessionLink = document.getElementById('mouseflow-session-link')
 var mfNotInstalled = document.getElementById('mouseflow-not-installed');
+var mfOutOfCredits = document.getElementById('mouseflow-out-of-credits');
+var mfOtherError = document.getElementById('mouseflow-other-error');
+var mfDocumentHost = document.getElementById('document-host');
 
 chrome.runtime.onMessage.addListener(function(mf, sender) {
   chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
     const activeTab = tabs[0];
     if (sender.tab.id === activeTab.id) {
-      if(mf.isInstalled) {
+      if(mf.isInstalled && mf.recordingRate === null) {
+        mfOutOfCredits.style = "display: block";
+      } else if (mf.isInstalled && mf.recordingRate === 100) {
+        mfDocumentHost.innerText = mf.documentHost;
+        mfOtherError.style = "display: block";
+      } else if (mf.isInstalled) {
         mfVersion.innerText = mf.version;
         mfIsRecording.innerText = mf.isRecording ? 'On' : 'Off';
         mfRecordingRate.innerText = mf.recordingRate;
