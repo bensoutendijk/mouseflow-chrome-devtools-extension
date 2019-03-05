@@ -17,7 +17,7 @@ chrome.runtime.onMessage.addListener(function(mf, sender) {
     if (sender.tab.id === activeTab.id) {
       if(mf.isInstalled && mf.recordingRate === null) {
         mfOutOfCredits.style = "display: block";
-      } else if (mf.isInstalled && mf.recordingRate === 100) {
+      } else if (!mf.isRecording && mf.recordingRate === 100) {
         mfDocumentHost.innerText = mf.documentHost;
         mfOtherError.style = "display: block";
       } else if (mf.isInstalled) {
