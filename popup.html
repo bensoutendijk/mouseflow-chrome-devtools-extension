@@ -8,8 +8,9 @@
     </head>
     <body class="root container">
       <div class="row">
-        <div class="container pt-2">
-          <a href="https://app.mouseflow.com" target="_blank">
+        <div class="container">
+          <a class="app-link" href="https://app.mouseflow.com" target="_blank">
+            <img class="logo" src="images/Mouseflow_Atom.png">
             <h5>Mouseflow <span class="h6 version-number" id="mouseflow-version-number"></span></h5>
           </a>
         </div>
@@ -19,7 +20,7 @@
           <div id="mouseflow-not-installed" style="display: none">
             <h6>Mouseflow does not appear to be installed on this page.</h6>
             <span>If this seems wrong, please refer to the </span>
-            <a href="http://help.mouseflow.com/knowledge_base/topics/installation-guide-1" target="_blank">
+            <a href="https://support.mouseflow.com/support/solutions/articles/44000620646-installation-guide" target="_blank">
               installation guide</a>
           </div>
         </div>
@@ -39,19 +40,28 @@
           <div id="mouseflow-other-error" style="display: none">
             <h6>You either need to activate tracking or the domain <code id="document-host"></code> is not whitelisted.</h6>
             <span>To activate tracking, visit </span>
-            <a href="https://app.mouseflow.com/webistes" target="_blank">
+            <a href="https://app.mouseflow.com/websites" target="_blank">
               your account</a><br/>
           </div>
         </div>
       </div>
       <div class="row" id="mouseflow-data" style="display: none">
         <div class="container">
-          <span class="h6">RECORDING: </span>
-          <span class="h6" id="mouseflow-is-recording"></span><br><br>
+          <div class="row">
+            <div class="col-6">
+              <span class="h6">RECORDING </span>
+              <span class="h6" id="recording-status"></span>
+            </div>
+            <div class="col-6" style="text-align: right;">
+              <a class="h6" style="color: #73aa42;" id="mouseflow-session-link" href="#" target="_blank">View Session</a>
+            </div>
+          </div>
+          <br><br>
           <span class="h6">RATE: </span>
-          <span class="h6" id="mouseflow-recording-rate"></span><span>%</span><br><br>
+          <span class="h6" id="mouseflow-recording-rate"></span><span>%</span>
+          <br><br>
           <span class="h6">WEBSITE ID: </span>
-          <textarea class="h6" id="mouseflow-website-id" rows="1" cols="34"></textarea></br>
+          <textarea class="h6" id="mouseflow-website-id" rows="1" cols="34"></textarea>
           <button id="button-copy-website-id" class="btn">
             Copy
               <img src="images/baseline-insert_drive_file-24px.svg" alt="copy-to-clipboard">
@@ -59,10 +69,8 @@
           <span id="copy-success-text" class="copy-text">Copied to clipboard!</span><br><br>
           <span>SESSION ID: </span>
           <span id="mouseflow-session-id"></span><br><br>
-          <a id="mouseflow-session-link" href="#" target="_blank">View Session</a>
         </div>
       </div>
       <script src="popup.js"></script>
-      
     </body>
   </html>

@@ -3,10 +3,29 @@ a {
   color: #73aa42;
 }
 
-textarea{
+a:hover {
+  text-decoration: none;
+}
+
+textarea {
   resize: none;
   white-space: nowrap;
   overflow-x: hidden;
+}
+
+.logo {
+  height: 40px;
+}
+
+.red-dot {
+  height: 16px;
+}
+
+.app-link {
+  padding-top: 2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .root {
