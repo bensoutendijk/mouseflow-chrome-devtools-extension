@@ -1,28 +1,23 @@
-const getMouseflow = function() {
-  let mfExtensionsData;
-  if (window.mouseflow) {
-    mfExtensionsData = {
-      isInstalled: true,
-      version: window.mouseflow.version,
-      isRecording: window.mouseflow.isRecording(),
-      recordingRate: window.mouseflow.recordingRate,
-      websiteId: window.mouseflow.websiteId,
-      sessionId: window.mouseflow.getSessionId(),
-      documentHost: document.location.host,
-    };
-  } else {
-    mfExtensionsData = {
-      isInstalled: false,
-      version: null,
-      isRecording: null,
-      recordingRate: null,
-      websiteId: null,
-      sessionId: null,
-    };
-  }
-  const mfExtensionEvent = document.createEvent("CustomEvent");
-  mfExtensionEvent.initCustomEvent("mfDataTick", true, true, mfExtensionsData);
-  document.dispatchEvent(mfExtensionEvent);
-};
+import { MessageData } from "./types";
 
-const mfWatch = setInterval(getMouseflow, 500);
+(function() {
+  const customEvent = document.createEvent("CustomEvent");
+
+  const scrub = function() {
+    const data: MessageData ={
+      isInstalled: !!window.mouseflow,
+      version: window.mouseflow?.version,
+      isRecording: window.mouseflow?.isRecording(),
+      recordingRate: window.mouseflow?.recordingRate,
+      websiteId: window.mouseflow?.websiteId,
+      sessionId: window.mouseflow?.getSessionId(),
+      domain: window.location.host,
+      mouseflowPath: window.mouseflowPath,
+    };
+
+    customEvent.initCustomEvent("mfDataTick", true, true, data);
+    document.dispatchEvent(customEvent);
+  };
+
+  setInterval(scrub, 500);
+})();

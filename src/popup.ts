@@ -1,3 +1,5 @@
+import { MessageData } from "./types";
+
 const mfData = document.getElementById('mouseflow-data');
 const mfVersion = document.getElementById('mouseflow-version-number');
 const mfRecordingStatus = document.getElementById('recording-status');
@@ -10,38 +12,37 @@ const mfNotInstalled = document.getElementById('mouseflow-not-installed');
 const mfOutOfCredits = document.getElementById('mouseflow-out-of-credits');
 const mfOtherError = document.getElementById('mouseflow-other-error');
 const mfDocumentHost = document.getElementById('document-host');
+const mfMouseflowPath = document.getElementById('mouseflowPath');
 
-chrome.runtime.onMessage.addListener(function(mf, sender) {
+chrome.runtime.onMessage.addListener(function(message: MessageData, sender) {
   chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
     const activeTab = tabs[0];
-    console.log(sender.tab?.id === activeTab.id);
+
     if (sender.tab?.id === activeTab.id) {
-      if(mf.isInstalled && mf.recordingRate === null) {
+      if(message.isInstalled === true && message.recordingRate === null) {
         if (mfOutOfCredits !== null) 
           mfOutOfCredits.style.display = "block";
-      } else if (!mf.isRecording && mf.recordingRate === 100) {
-        if (mfDocumentHost !== null)
-          mfDocumentHost.innerText = mf.documentHost;
-        if (mfOtherError !== null)
-          mfOtherError.style.display = "block";
-      } else if (mf.isInstalled) {
-        if (mfVersion !== null)
-          mfVersion.innerText = mf.version;
-        if (mfRecordingStatus !== null)
-          mfRecordingStatus.innerHTML = mf.isRecording ? '<img class="red-dot" src="assets/images/red_dot.png">' : 'Off';
-        if (mfRecordingRate !== null)
-          mfRecordingRate.innerText = mf.recordingRate;
-        if (mfWebsiteId !== null)
-          mfWebsiteId.innerText = mf.websiteId;
-        if (mfSessionId !== null)
-          mfSessionId.innerText = mf.sessionId;
-        if (sessionLink !== null)
-          sessionLink.href = `https://app.mouseflow.com/websites/${mf.websiteId}/recordings/${mf.sessionId}/play`;
-        if (mfData !== null)
-          mfData.style.display = 'block';
-      } else {
+      } else if(message.isInstalled === false) {
         if (mfNotInstalled !== null)
           mfNotInstalled.style.display = "block";
+      } else if (message.isInstalled == true) {
+        if (mfVersion !== null && typeof message.version !== 'undefined')
+          mfVersion.innerText = message.version;
+        if (mfRecordingStatus !== null)
+          mfRecordingStatus.innerHTML = message.isRecording ? '<img class="red-dot" src="assets/images/red_dot.png">' : 'Off';
+        if (mfRecordingRate !== null && typeof message.recordingRate !== 'undefined')
+          mfRecordingRate.innerText = message.recordingRate.toString();
+        if (mfWebsiteId !== null && typeof message.websiteId !== 'undefined')
+          mfWebsiteId.innerText = message.websiteId;
+        if (mfSessionId !== null && typeof message.sessionId !== 'undefined')
+          mfSessionId.innerText = message.sessionId;
+        if (sessionLink !== null)
+          sessionLink.href = `https://app.mouseflow.com/websites/${message.websiteId}/recordings/${message.sessionId}/play`;
+        if (mfMouseflowPath !== null && typeof message.mouseflowPath !== 'undefined')
+          mfMouseflowPath.style.display = 'inline-block',
+          mfMouseflowPath.innerText = message.mouseflowPath;
+        if (mfData !== null)
+          mfData.style.display = 'block';
       }
     }
   });

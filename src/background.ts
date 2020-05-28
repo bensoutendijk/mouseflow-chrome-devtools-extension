@@ -1,5 +1,5 @@
 chrome.runtime.onMessage.addListener(
-  function(request, sender, sendResponse) {
+  function(request, sender) {
     chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
       const activeTab = tabs[0];
       if (sender.tab?.id === activeTab.id) {

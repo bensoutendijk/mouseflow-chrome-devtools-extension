@@ -1,12 +1,20 @@
 declare global {
   interface Window {
-    mouseflow: Mouseflow;
+    mouseflowPath?: string;
+    mouseflow?: Mouseflow;
   }
 }
 
-export interface MFDataTickEvent extends Event {
-  detail: any;
-}
+export type MessageData = {
+  isInstalled: boolean;
+  version?: string;
+  isRecording?: boolean;
+  recordingRate?: number;
+  websiteId?: string;
+  sessionId?: string;
+  domain: string;
+  mouseflowPath?: string;
+};
 
 export interface Mouseflow {
   version: string;
