@@ -1,4 +1,4 @@
-const getMouseflow = function () {
+const getMouseflow = function() {
   let mfExtensionsData;
   if (window.mouseflow) {
     mfExtensionsData = {
@@ -9,8 +9,7 @@ const getMouseflow = function () {
       websiteId: window.mouseflow.websiteId,
       sessionId: window.mouseflow.getSessionId(),
       documentHost: document.location.host,
-    }
-    clearInterval(getMouseflow);
+    };
   } else {
     mfExtensionsData = {
       isInstalled: false,
@@ -19,11 +18,11 @@ const getMouseflow = function () {
       recordingRate: null,
       websiteId: null,
       sessionId: null,
-    }
+    };
   }
-  var mfExtensionEvent = document.createEvent("CustomEvent");
+  const mfExtensionEvent = document.createEvent("CustomEvent");
   mfExtensionEvent.initCustomEvent("mfDataTick", true, true, mfExtensionsData);
   document.dispatchEvent(mfExtensionEvent);
-}
+};
 
-var mfWatch = setInterval(getMouseflow, 500);
+const mfWatch = setInterval(getMouseflow, 500);
