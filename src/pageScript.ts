@@ -1,9 +1,11 @@
 import { MessageData } from "./types";
 
 (function() {
+  console.log('page script executed');
   const customEvent = document.createEvent("CustomEvent");
 
   const scrub = function() {
+    console.log('scrub');
     const data: MessageData ={
       isInstalled: !!window.mouseflow,
       version: window.mouseflow?.version,

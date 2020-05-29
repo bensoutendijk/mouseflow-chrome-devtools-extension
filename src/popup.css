@@ -1,49 +1,10 @@
-a {
-  text-decoration: none;
-  color: #73aa42;
+.App {
+  min-height: 800px;
+  width: 600px;
 }
 
-a:hover {
-  text-decoration: none;
-}
-
-textarea {
-  resize: none;
-  white-space: nowrap;
-  overflow-x: hidden;
-}
-
-.logo {
-  height: 40px;
-}
-
-.red-dot {
-  height: 16px;
-}
-
-.app-link {
-  padding-top: 2em;
+.diagnostics-list > .list-group-item {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-}
-
-.root {
-  color: rgb(0, 0, 0);
-  font-family: 'Open Sans';
-  font-size: 12px;
-  width: 352px;
-}
-
-.copy-text {
-  opacity: 0;
-}
-
-.copied {
-  opacity: 1;
-  transition: opacity 0.5s;
-}
-
-.version-number {
-  color: black;
 }

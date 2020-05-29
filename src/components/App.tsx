@@ -25,14 +25,64 @@ const App = function() {
         }
       });
     }); 
-  });
+  }, []);
 
   if (!state.fetched || typeof state.data === 'undefined') {
     return null;
   }
 
   return (
-    <Header version={state.data.version} isInstalled={state.data.isInstalled} />
+    <div className="App">
+      <div className="container mt-4">
+        <Header version={state.data.version} isInstalled={state.data.isInstalled} />
+        {state.data.isInstalled ? (
+          <div>
+            <div className="Diagnostics card">
+              <div className="card-header">
+                <em>{`Diagnostics`}</em>
+              </div>
+              <ul className="diagnostics-list list-group list-group-flush">
+                <li className="list-group-item">
+                  <div>
+                    {`Recording: `}<span className={state.data.isRecording ? "text-danger" : "text-secondary"}>{`${state.data.isRecording}`}</span>
+                  </div>
+                  <a 
+                    className="btn btn-info"
+                    href={`https://app.mouseflow.com/websites/${state.data.websiteId}/recordings/${state.data.sessionId}/play`} 
+                    target="_blank"
+                  >
+                    {`View session`}<img className="ml-2" style={{ width: '1em' }} src="assets/images/external-link-duotone.svg" />
+                  </a>
+                </li>
+                <li className="list-group-item">
+                  <div>
+                    {`Recording rate: `}<span className="text-info">{`${state.data.recordingRate}%`}</span>
+                  </div>
+                </li>
+                <li className="list-group-item">
+                  <div className="input-group mr-1">
+                    <div className="input-group-prepend">
+                      <span className="input-group-text">{`Website ID: `}</span>
+                    </div>
+                    <input type="text" id="session-id" className="form-control" value={`${state.data.websiteId}`}/>
+                  </div>
+                  <button type="button" className="btn btn-secondary">Copy</button>
+                </li>
+                <li className="list-group-item">
+                  <div className="input-group mr-1">
+                    <div className="input-group-prepend">
+                      <span className="input-group-text">{`Session ID: `}</span>
+                    </div>
+                    <input type="text" id="session-id" className="form-control" value={`${state.data.sessionId}`}/>
+                  </div>
+                  <button type="button" className="btn btn-secondary">Copy</button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        ) : null}
+      </div>
+    </div>
   );
 };
 

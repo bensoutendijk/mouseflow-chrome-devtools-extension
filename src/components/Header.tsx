@@ -6,17 +6,13 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = function({ isInstalled, version }) {
-  if (!isInstalled) {
-    return (
-      <header>
-        <h2>Mouseflow does not appear to be installed.</h2>
-      </header>
-    );
-  }
-
   return (
-    <header>
-      <h2>{`Mouseflow ${version ? version : ''}`}</h2>
+    <header className="Header">
+      {isInstalled ? (
+        <h4 className="text-success">{`Mouseflow ${version ? version : ''}`}</h4>
+      ) : (
+        <h4>{`Mouseflow does not appear to be installed on the page.`}</h4>
+      )}
     </header>
   );
 };
