@@ -3,76 +3,10 @@
     <head>
       <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
       <link rel="stylesheet" type="text/css" href="popup.css">
-      <script src="assets/js/bootstrap.min.js"></script>
       <link href="https://fonts.googleapis.com/css?family=Open+Sans:700" rel="stylesheet">
     </head>
-    <body class="root container">
-      <div class="row">
-        <div class="container">
-          <a class="app-link" href="https://app.mouseflow.com" target="_blank">
-            <img class="logo" src="assets/images/Mouseflow_Atom.png">
-            <h5>Mouseflow <span class="h6 version-number" id="mouseflow-version-number"></span></h5>
-          </a>
-        </div>
-      </div>
-      <div class="row">
-        <div class="container pb-2">
-          <div id="mouseflow-not-installed" style="display: none">
-            <h6>Mouseflow does not appear to be installed on this page.</h6>
-            <span>If this seems wrong, please refer to the </span>
-            <a href="https://support.mouseflow.com/support/solutions/articles/44000620646-installation-guide" target="_blank">
-              installation guide</a>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="container pb-2">
-          <div id="mouseflow-out-of-credits" style="display: none">
-            <h6>You appear to be out of credits.</h6>
-            <span>If this seems wrong, please refer to your </span>
-            <a href="https://app.mouseflow.com/billing" target="_blank">
-              billing page</a>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="container pb-2">
-          <div id="mouseflow-other-error" style="display: none">
-            <h6>You either need to activate tracking or the domain <code id="document-host"></code> is not whitelisted.</h6>
-            <span>To activate tracking, visit </span>
-            <a href="https://app.mouseflow.com/websites" target="_blank">
-              your account</a><br/>
-          </div>
-        </div>
-      </div>
-      <div class="row" id="mouseflow-data" style="display: none">
-        <div class="container">
-          <div class="row">
-            <div class="col-6">
-              <span class="h6">RECORDING </span>
-              <span class="h6" id="recording-status"></span>
-            </div>
-            <div class="col-6" style="text-align: right;">
-              <a class="h6" style="color: #73aa42;" id="mouseflow-session-link" href="#" target="_blank">View Session</a>
-            </div>
-          </div>
-          <br><br>
-          <span class="h6">RATE: </span>
-          <span class="h6" id="mouseflow-recording-rate"></span><span>%</span>
-          <br><br>
-          <span class="h6">WEBSITE ID: </span>
-          <textarea class="h6" id="mouseflow-website-id" rows="1" cols="34"></textarea>
-          <button id="button-copy-website-id" class="btn">
-            Copy
-              <img src="assets/images/baseline-insert_drive_file-24px.svg" alt="copy-to-clipboard">
-          </button>
-          <span id="copy-success-text" class="copy-text">Copied to clipboard!</span><br><br>
-          <span>SESSION ID: </span>
-          <span id="mouseflow-session-id"></span><br><br>
-          <span>Mouseflow Path: </span>
-          <span id="mouseflowPath" style="display: none;"></span><br><br>
-        </div>
-      </div>
+    <body>
+      <div id="app"></div>
       <script src="popup.js"></script>
     </body>
   </html>
