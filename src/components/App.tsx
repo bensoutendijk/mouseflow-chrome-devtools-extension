@@ -31,6 +31,32 @@ const App = function() {
     return null;
   }
 
+  const copyInput: React.MouseEventHandler = function(event) {
+    event.preventDefault();
+    
+    const element = event.target as HTMLButtonElement;
+    const dataTarget = element.getAttribute('data-target');
+    if (dataTarget === null) {
+      return;
+    }
+
+    const target = document.getElementById(dataTarget) as HTMLInputElement;
+    if (target === null) {
+      return;
+    }
+    
+    // Copy the text
+    target.select();
+    document.execCommand('copy');
+    
+    // Change the button text temporarily
+    const originalText = element.innerText;
+    element.innerText = 'Copied';
+    setTimeout(() => { 
+      element.innerText = originalText;
+    }, 2000);
+  };
+
   return (
     <div className="App">
       <div className="container mt-4">
@@ -64,9 +90,9 @@ const App = function() {
                     <div className="input-group-prepend">
                       <span className="input-group-text">{`Website ID: `}</span>
                     </div>
-                    <input type="text" id="session-id" className="form-control" value={`${state.data.websiteId}`}/>
+                    <input type="text" id="website-id" className="form-control" value={`${state.data.websiteId}`}/>
                   </div>
-                  <button type="button" className="btn btn-secondary">Copy</button>
+                  <button type="button" className="btn btn-secondary" onClick={copyInput} data-target="website-id">Copy</button>
                 </li>
                 <li className="list-group-item">
                   <div className="input-group mr-1">
@@ -75,7 +101,7 @@ const App = function() {
                     </div>
                     <input type="text" id="session-id" className="form-control" value={`${state.data.sessionId}`}/>
                   </div>
-                  <button type="button" className="btn btn-secondary">Copy</button>
+                  <button type="button" className="btn btn-secondary" onClick={copyInput} data-target="session-id">Copy</button>
                 </li>
               </ul>
             </div>
