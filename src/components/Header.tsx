@@ -5,6 +5,10 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = function({ version }) {
+  if (typeof version === 'undefined') {
+    return null;
+  }
+  
   return (
     <h2>{`Mouseflow ${version}`}</h2>
   );

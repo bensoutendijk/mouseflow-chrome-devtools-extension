@@ -3,10 +3,14 @@ import Header from './Header';
 
 import { MessageData } from '../types';
 
+interface AppState {
+  fetched: boolean; 
+  data?: MessageData;
+}
+
 const App = function() {
-  const [data, setData] = useState<MessageData>({
-    isInstalled: false,
-    domain: window.location.host,
+  const [state, setState] = useState<AppState>({
+    fetched: false,
   });
 
   useEffect(() => {
@@ -14,14 +18,21 @@ const App = function() {
       chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
         const activeTab = tabs[0];
         if (sender.tab?.id === activeTab.id) {
-          setData(message);
+          setState({
+            fetched: true,
+            data: message,
+          });
         }
       });
     }); 
   });
 
+  if (!state.fetched || typeof state.data === 'undefined') {
+    return null;
+  }
+
   return (
-    <Header version={data.version} />
+    <Header version={state.data.version} />
   );
 };
 
