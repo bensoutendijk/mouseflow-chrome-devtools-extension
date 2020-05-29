@@ -32,7 +32,7 @@ const App = function() {
   }
 
   return (
-    <Header version={state.data.version} />
+    <Header version={state.data.version} isInstalled={state.data.isInstalled} />
   );
 };
 
