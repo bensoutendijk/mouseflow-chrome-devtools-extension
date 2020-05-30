@@ -21,6 +21,14 @@ import { MouseflowEventDetail, MouseflowEvent, MouseflowEventType, MouseflowDiag
         }),
         document.dispatchEvent(responseEvent);
         break;
+      case MouseflowEventType.START_SESSION:
+        window.mouseflow?.start();
+        Object.assign(responseEvent.detail, {
+          type: MouseflowEventType.RECEIVE_DIAGNOSTICS,
+          payload: getDiagnostics(),
+        }),
+        document.dispatchEvent(responseEvent);
+        break;
       default:
         break;
     }

@@ -26,6 +26,9 @@ chrome.runtime.onMessage.addListener((message: MouseflowEventDetail, sender) => 
     case MouseflowEventType.STOP_SESSION:
       document.dispatchEvent(event);
       break;
+    case MouseflowEventType.START_SESSION:
+      document.dispatchEvent(event);
+      break;
     default:
       break;
   }

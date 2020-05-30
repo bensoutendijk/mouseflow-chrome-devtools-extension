@@ -11,14 +11,6 @@ interface AppState {
 const App = function() {
   const [state, setState] = useState<AppState>({});
 
-  const handleClick: React.MouseEventHandler = function(event) {
-    event.preventDefault();
-    const message: MouseflowEventDetail = {
-      type: MouseflowEventType.STOP_SESSION,
-    };
-    chrome.runtime.sendMessage(message);
-  };
-
   useEffect(() => {
     chrome.runtime.sendMessage({ type: MouseflowEventType.FETCH_DIAGNOSTICS });
   }, []);
@@ -60,7 +52,7 @@ const App = function() {
               sessionId={state.diagnostics.sessionId}
             />
             <div className="UtilitiesMenu mt-2">
-              <button type="button" className="btn btn-warn" onClick={handleClick}>Stop Session</button>
+              
             </div>
           </div>
         ) : null}

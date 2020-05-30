@@ -1,4 +1,5 @@
 import React from 'react';
+import SessionControls from './SessionControls';
 
 interface DiagnosticsCardProps {
   isRecording?: boolean;
@@ -42,9 +43,7 @@ const DiagnosticsCard: React.FC<DiagnosticsCardProps> = function({ isRecording, 
       </div>
       <ul className="diagnostics-list list-group list-group-flush">
         <li className="list-group-item">
-          <div>
-            {`Recording: `}<span className={isRecording ? "text-danger" : "text-secondary"}>{`${isRecording}`}</span>
-          </div>
+          <SessionControls isRecording={!!isRecording} />
           <a 
             className="btn btn-info"
             href={`https://app.mouseflow.com/websites/${websiteId}/recordings/${sessionId}/play`} 

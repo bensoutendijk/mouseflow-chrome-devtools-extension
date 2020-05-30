@@ -8,6 +8,7 @@ declare global {
 export enum MouseflowEventType {
   FETCH_DIAGNOSTICS,
   RECEIVE_DIAGNOSTICS,
+  START_SESSION,
   STOP_SESSION
 }
 
@@ -20,6 +21,8 @@ export type MouseflowEventDetail = {
   payload: MouseflowDiagnostics;
 } | {
   type: MouseflowEventType.STOP_SESSION;
+} | {
+  type: MouseflowEventType.START_SESSION;
 };
 
 export interface MouseflowDiagnostics {
@@ -42,4 +45,5 @@ export interface Mouseflow {
   getSessionId: () => string;
   getPageviewId: () => string;
   stopSession: () => void;
+  start: () => void;
 }
