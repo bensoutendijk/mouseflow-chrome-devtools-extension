@@ -1,12 +1,33 @@
-import { MessageData } from "./types";
+/* eslint-disable no-case-declarations */
+import { MouseflowEventDetail, MouseflowEvent, MouseflowEventType, MouseflowDiagnostics } from "./types";
 
 (function() {
-  console.log('page script executed');
-  const customEvent = document.createEvent("CustomEvent");
+  document.addEventListener('mouseflow', function (requestEvent: MouseflowEvent) {
+    const responseEvent = new CustomEvent<MouseflowEventDetail | unknown >('mouseflow', { detail: {} });
+    switch (requestEvent.detail.type) {
+      case MouseflowEventType.FETCH_DIAGNOSTICS:
+        Object.assign(responseEvent.detail, {
+          type: MouseflowEventType.RECEIVE_DIAGNOSTICS,
+          payload: getDiagnostics(),
+        }),
 
-  const scrub = function() {
-    console.log('scrub');
-    const data: MessageData ={
+        document.dispatchEvent(responseEvent);
+        break;
+      case MouseflowEventType.STOP_SESSION:
+        window.mouseflow?.stopSession();
+        Object.assign(responseEvent.detail, {
+          type: MouseflowEventType.RECEIVE_DIAGNOSTICS,
+          payload: getDiagnostics(),
+        }),
+        document.dispatchEvent(responseEvent);
+        break;
+      default:
+        break;
+    }
+  } as EventListener);
+
+  const getDiagnostics = function(): MouseflowDiagnostics {
+    return {
       isInstalled: !!window.mouseflow,
       version: window.mouseflow?.version,
       isRecording: window.mouseflow?.isRecording(),
@@ -16,10 +37,5 @@ import { MessageData } from "./types";
       domain: window.location.host,
       mouseflowPath: window.mouseflowPath,
     };
-
-    customEvent.initCustomEvent("mfDataTick", true, true, data);
-    document.dispatchEvent(customEvent);
   };
-
-  setInterval(scrub, 500);
 })();

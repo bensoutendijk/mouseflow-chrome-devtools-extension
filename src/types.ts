@@ -5,7 +5,24 @@ declare global {
   }
 }
 
-export type MessageData = {
+export enum MouseflowEventType {
+  FETCH_DIAGNOSTICS,
+  RECEIVE_DIAGNOSTICS,
+  STOP_SESSION
+}
+
+export type MouseflowEvent = CustomEvent<MouseflowEventDetail>;
+
+export type MouseflowEventDetail = {
+  type: MouseflowEventType.FETCH_DIAGNOSTICS;
+} | {
+  type: MouseflowEventType.RECEIVE_DIAGNOSTICS;
+  payload: MouseflowDiagnostics;
+} | {
+  type: MouseflowEventType.STOP_SESSION;
+};
+
+export interface MouseflowDiagnostics {
   isInstalled: boolean;
   version?: string;
   isRecording?: boolean;
@@ -14,7 +31,8 @@ export type MessageData = {
   sessionId?: string;
   domain: string;
   mouseflowPath?: string;
-};
+}
+
 
 export interface Mouseflow {
   version: string;
@@ -23,4 +41,5 @@ export interface Mouseflow {
   websiteId: string;
   getSessionId: () => string;
   getPageviewId: () => string;
+  stopSession: () => void;
 }

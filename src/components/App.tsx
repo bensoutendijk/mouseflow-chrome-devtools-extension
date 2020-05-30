@@ -2,48 +2,66 @@ import React, { useEffect, useState } from 'react';
 import Header from './Header';
 import DiagnosticsCard from './DiagnosticsCard';
 
-import { MessageData } from '../types';
+import { MouseflowEventDetail, MouseflowDiagnostics, MouseflowEventType } from '../types';
 
 interface AppState {
-  fetched: boolean; 
-  data?: MessageData;
+  diagnostics?: MouseflowDiagnostics;
 }
 
 const App = function() {
-  const [state, setState] = useState<AppState>({
-    fetched: false,
-  });
+  const [state, setState] = useState<AppState>({});
+
+  const handleClick: React.MouseEventHandler = function(event) {
+    event.preventDefault();
+    const message: MouseflowEventDetail = {
+      type: MouseflowEventType.STOP_SESSION,
+    };
+    chrome.runtime.sendMessage(message);
+  };
 
   useEffect(() => {
-    chrome.runtime.onMessage.addListener(function(message: MessageData, sender) {
-      chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
-        const activeTab = tabs[0];
-        if (sender.tab?.id === activeTab.id) {
-          setState({
-            fetched: true,
-            data: message,
-          });
-        }
-      });
-    }); 
+    chrome.runtime.sendMessage({ type: MouseflowEventType.FETCH_DIAGNOSTICS });
   }, []);
 
-  if (!state.fetched || typeof state.data === 'undefined') {
+  useEffect(() => {
+    const eventHandler = function(response: MouseflowEventDetail) {
+      switch (response.type) {
+        case MouseflowEventType.RECEIVE_DIAGNOSTICS:
+          setState({
+            ...state,
+            diagnostics: response.payload,
+          });
+          break;
+      
+        default:
+          break;
+      }
+    };
+
+    chrome.runtime.onMessage.addListener(eventHandler);
+
+    return () => chrome.runtime.onMessage.removeListener(eventHandler);
+  });
+
+  if (typeof state.diagnostics === 'undefined') {
     return null;
   }
 
   return (
     <div className="App">
       <div className="container mt-4">
-        <Header version={state.data.version} isInstalled={state.data.isInstalled} />
-        {state.data.isInstalled ? (
+        <Header version={state.diagnostics.version} isInstalled={state.diagnostics.isInstalled} />
+        {state.diagnostics.isInstalled ? (
           <div>
             <DiagnosticsCard 
-              isRecording={state.data.isRecording}
-              recordingRate={state.data.recordingRate}
-              websiteId={state.data.websiteId}
-              sessionId={state.data.sessionId}
+              isRecording={state.diagnostics.isRecording}
+              recordingRate={state.diagnostics.recordingRate}
+              websiteId={state.diagnostics.websiteId}
+              sessionId={state.diagnostics.sessionId}
             />
+            <div className="UtilitiesMenu mt-2">
+              <button type="button" className="btn btn-warn" onClick={handleClick}>Stop Session</button>
+            </div>
           </div>
         ) : null}
       </div>

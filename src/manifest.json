@@ -14,7 +14,7 @@
       "run_at": "document_end"
     }
   ],
-  "web_accessible_resources": ["pageScript.js"],
+  "web_accessible_resources": ["pageScript.js", "./*.map"],
   "browser_action": {
     "default_popup": "popup.html",
     "default_icon": "assets/images/mf_inactive.png"
