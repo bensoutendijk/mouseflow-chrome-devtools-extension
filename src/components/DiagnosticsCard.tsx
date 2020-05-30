@@ -39,7 +39,7 @@ const DiagnosticsCard: React.FC<DiagnosticsCardProps> = function({ isRecording, 
   return (
     <div className="Diagnostics card">
       <div className="card-header">
-        <em>{`Diagnostics`}</em>
+        <h5 className="m-0">Diagnostics</h5>
       </div>
       <ul className="diagnostics-list list-group list-group-flush">
         <li className="list-group-item">
