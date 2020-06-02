@@ -9,6 +9,7 @@
       "plugin:@typescript-eslint/recommended"
     ],
     "rules": {
+      "no-console": "error",
       "semi": "off",
       "indent": "off",
       "camelcase": "off",
