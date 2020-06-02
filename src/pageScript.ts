@@ -1,5 +1,5 @@
 /* eslint-disable no-case-declarations */
-import { MouseflowEventDetail, MouseflowEvent, MouseflowEventType, MouseflowDiagnostics } from "./types";
+import { MouseflowEventDetail, MouseflowEvent, MouseflowEventType, MouseflowDiagnostics, MouseflowGlobals } from "./types";
 
 (function() {
   document.addEventListener('mouseflow', function (requestEvent: MouseflowEvent) {
@@ -11,6 +11,13 @@ import { MouseflowEventDetail, MouseflowEvent, MouseflowEventType, MouseflowDiag
           payload: getDiagnostics(),
         }),
 
+        document.dispatchEvent(responseEvent);
+        break;
+      case MouseflowEventType.FETCH_WINDOW_GLOBALS:
+        Object.assign(responseEvent.detail, {
+          type: MouseflowEventType.RECEIVE_WINDOW_GLOBALS,
+          payload: getMouseflowVariables(),
+        }),
         document.dispatchEvent(responseEvent);
         break;
       case MouseflowEventType.STOP_SESSION:
@@ -43,7 +50,29 @@ import { MouseflowEventDetail, MouseflowEvent, MouseflowEventType, MouseflowDiag
       websiteId: window.mouseflow?.websiteId,
       sessionId: window.mouseflow?.getSessionId(),
       domain: window.location.host,
+    };
+  };
+
+  const getMouseflowVariables = function(): Partial<MouseflowGlobals> {
+    return {
       mouseflowPath: window.mouseflowPath,
+      mouseflowAutoStart: window.mouseflowAutoStart,
+      mouseflowDisableKeyLogging: window.mouseflowDisableKeyLogging,
+      mouseflowExcludeSubDomains: window.mouseflowExcludeSubDomains,
+      mouseflowCrossDomainSupport: window.mouseflowCrossDomainSupport,
+      mouseflowHref: window.mouseflowHref,
+      mouseflowRegisterSubmitTimeout: window.mouseflowRegisterSubmitTimeout,
+      mouseflowDisableDomDeduplicator: window.mouseflowDisableDomDeduplicator,
+      mouseflowAutoTagging: window.mouseflowAutoTagging,
+      mouseflowDisableDomReuse: window.mouseflowDisableDomReuse,
+      mouseflowHtmlDelay: window.mouseflowHtmlDelay,
+      mouseflowForceGdpr: window.mouseflowForceGdpr,
+      mouseflowSessionId: window.mouseflowSessionId,
+      mouseflowCompress: window.mouseflowCompress,
+      mouseflowDebug: window.mouseflowDebug,
+      mouseflowUseCssPaths: window.mouseflowUseCssPaths,
+      mouseflowDisableCssPaths: window.mouseflowDisableCssPaths,
+      mouseflowHtmlFetchMode: window.mouseflowHtmlFetchMode,
     };
   };
 })();

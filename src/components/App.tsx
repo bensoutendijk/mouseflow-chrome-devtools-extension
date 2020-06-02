@@ -2,10 +2,15 @@ import React, { useEffect, useState } from 'react';
 import Header from './Header';
 import DiagnosticsCard from './DiagnosticsCard';
 
-import { MouseflowEventDetail, MouseflowDiagnostics, MouseflowEventType } from '../types';
+import { MouseflowEventDetail,
+  MouseflowDiagnostics, 
+  MouseflowEventType, 
+  MouseflowGlobals, 
+} from '../types';
 
 interface AppState {
   diagnostics?: MouseflowDiagnostics;
+  globals?: Partial<MouseflowGlobals>;
 }
 
 const App = function() {
@@ -13,6 +18,7 @@ const App = function() {
 
   useEffect(() => {
     chrome.runtime.sendMessage({ type: MouseflowEventType.FETCH_DIAGNOSTICS });
+    chrome.runtime.sendMessage({ type: MouseflowEventType.FETCH_WINDOW_GLOBALS });
   }, []);
 
   useEffect(() => {
@@ -24,7 +30,13 @@ const App = function() {
             diagnostics: response.payload,
           });
           break;
-      
+        case MouseflowEventType.RECEIVE_WINDOW_GLOBALS:
+          setState({
+            ...state,
+            globals: response.payload,
+          });
+          break;
+        
         default:
           break;
       }
@@ -35,7 +47,7 @@ const App = function() {
     return () => chrome.runtime.onMessage.removeListener(eventHandler);
   });
 
-  if (typeof state.diagnostics === 'undefined') {
+  if (typeof state.diagnostics === 'undefined' || typeof state.globals === 'undefined') {
     return null;
   }
 
@@ -51,9 +63,24 @@ const App = function() {
               websiteId={state.diagnostics.websiteId}
               sessionId={state.diagnostics.sessionId}
             />
-            <div className="UtilitiesMenu mt-2">
-              
-            </div>
+            {state.globals ? (
+              <div className="GlobalsCard card mt-2">
+                <div className="card-header">
+                  <h5 className="m-0">Global Variables</h5>
+                </div>
+                <ul className="list-group list-group-flush">
+                  {Object.keys(state.globals).map((key) => {
+                    if (typeof state.globals === 'undefined') {
+                      return null;
+                    }
+
+                    return (<li className="list-group-item">{`${key} = ${state.globals[key]}`}</li>);
+                  })}
+                </ul>
+              </div>
+            ) : (
+              null
+            )}
           </div>
         ) : null}
       </div>

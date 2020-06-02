@@ -10,6 +10,9 @@ document.addEventListener('mouseflow', function (event: MouseflowEvent) {
     case MouseflowEventType.RECEIVE_DIAGNOSTICS:
       chrome.runtime.sendMessage(event.detail);
       break;
+    case MouseflowEventType.RECEIVE_WINDOW_GLOBALS:
+      chrome.runtime.sendMessage(event.detail);
+      break;
     default:
       break;
   }
@@ -21,6 +24,9 @@ chrome.runtime.onMessage.addListener((message: MouseflowEventDetail, sender) => 
   });
   switch (message.type) {
     case MouseflowEventType.FETCH_DIAGNOSTICS:
+      document.dispatchEvent(event);
+      break;
+    case MouseflowEventType.FETCH_WINDOW_GLOBALS:
       document.dispatchEvent(event);
       break;
     case MouseflowEventType.STOP_SESSION:
@@ -35,6 +41,11 @@ chrome.runtime.onMessage.addListener((message: MouseflowEventDetail, sender) => 
 });
 
 chrome.runtime.sendMessage({ type: MouseflowEventType.FETCH_DIAGNOSTICS });
-const interval = setInterval(() => chrome.runtime.sendMessage({
-  type: MouseflowEventType.FETCH_DIAGNOSTICS,
-}), 500);
+const interval = setInterval(() => {
+  chrome.runtime.sendMessage({
+    type: MouseflowEventType.FETCH_DIAGNOSTICS,
+  });
+  chrome.runtime.sendMessage({
+    type: MouseflowEventType.FETCH_WINDOW_GLOBALS,
+  });
+}, 500);
