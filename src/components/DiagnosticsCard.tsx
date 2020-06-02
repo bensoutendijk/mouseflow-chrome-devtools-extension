@@ -36,6 +36,20 @@ const DiagnosticsCard: React.FC<DiagnosticsCardProps> = function({ isRecording, 
     }, 2000);
   };
 
+  // Check for null script
+  if (websiteId === null) {
+    return (
+      <div>
+        <h6>Null script detected. Please check for the following:</h6>
+        <ul>
+          <li>Tracking paused for the account</li>
+          <li>Account is out of credits</li>
+          <li>Recording limit met for this website</li>
+        </ul>
+      </div>
+    );
+  }
+
   return (
     <div className="Diagnostics card">
       <div className="card-header">
