@@ -1,13 +1,13 @@
 {
-  "name": "mouseflow-chrome-devtools-extension",
-  "version": "1.0.0",
-  "description": "Mouseflow DevTools for Chrome",
+  "name": "mouseflow-support-chrome-extension",
+  "version": "2.0.0",
+  "description": "Mouseflow Support for Chrome",
   "main": "background.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --watch src --exec \"npm run build\" --verbose -e ts,tsx,css,html,json",
     "prebuild": "rimraf build",
-    "build": "tsc && webpack",
+    "build": "webpack",
     "postbuild": "copyfiles -u 1 ./src/**/*.{svg,jpg,png,html,css,js,json} ./build"
   },
   "repository": {

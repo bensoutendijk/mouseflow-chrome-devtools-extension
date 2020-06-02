@@ -1,7 +1,6 @@
 const path = require('path');
 
 module.exports = {
-  devtool: "source-map",
   entry: {
     popup: './src/popup.tsx',
     pageScript: './src/pageScript.ts',
