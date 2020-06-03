@@ -51,7 +51,7 @@ const DiagnosticsCard: React.FC<DiagnosticsCardProps> = function({ isRecording, 
   }
 
   return (
-    <div className="Diagnostics card">
+    <div className="DiagnosticsCard card mb-4">
       <div className="card-header">
         <h5 className="m-0">Diagnostics</h5>
       </div>

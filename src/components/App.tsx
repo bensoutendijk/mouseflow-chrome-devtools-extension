@@ -7,6 +7,7 @@ import { MouseflowEventDetail,
   MouseflowEventType, 
   MouseflowGlobals, 
 } from '../types';
+import CookiesAlerts from './CookiesAlerts';
 
 interface AppState {
   diagnostics?: MouseflowDiagnostics;
@@ -53,7 +54,7 @@ const App = function() {
 
   return (
     <div className="App">
-      <div className="container mt-4">
+      <div className="container p-2">
         <Header version={state.diagnostics.version} isInstalled={state.diagnostics.isInstalled} />
         {state.diagnostics.isInstalled ? (
           <div>
@@ -64,7 +65,7 @@ const App = function() {
               sessionId={state.diagnostics.sessionId}
             />
             {state.globals ? (
-              <div className="GlobalsCard card mt-2">
+              <div className="GlobalsCard card mb-4">
                 <div className="card-header">
                   <h5 className="m-0">Global Variables</h5>
                 </div>
@@ -81,6 +82,7 @@ const App = function() {
             ) : (
               null
             )}
+            <CookiesAlerts cookies={state.diagnostics.cookies} />
           </div>
         ) : null}
       </div>
