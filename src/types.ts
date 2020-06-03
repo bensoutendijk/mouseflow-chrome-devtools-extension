@@ -64,6 +64,9 @@ export interface MouseflowDiagnostics {
   sessionId?: string;
   domain: string;
   mouseflowPath?: string;
+  cookies: {
+    [key: string]: string | undefined;
+  };
 }
 
 

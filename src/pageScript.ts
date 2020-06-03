@@ -1,4 +1,5 @@
 /* eslint-disable no-case-declarations */
+import Cookies from 'js-cookie';
 import { MouseflowEventDetail, MouseflowEvent, MouseflowEventType, MouseflowDiagnostics, MouseflowGlobals } from "./types";
 
 (function() {
@@ -50,6 +51,7 @@ import { MouseflowEventDetail, MouseflowEvent, MouseflowEventType, MouseflowDiag
       websiteId: window.mouseflow?.websiteId,
       sessionId: window.mouseflow?.getSessionId(),
       domain: window.location.host,
+      cookies: getMouseflowCookies(),
     };
   };
 
@@ -73,6 +75,16 @@ import { MouseflowEventDetail, MouseflowEvent, MouseflowEventType, MouseflowDiag
       mouseflowUseCssPaths: window.mouseflowUseCssPaths,
       mouseflowDisableCssPaths: window.mouseflowDisableCssPaths,
       mouseflowHtmlFetchMode: window.mouseflowHtmlFetchMode,
+    };
+  };
+  
+  const getMouseflowCookies = function() {
+    const mfUser = Cookies.get('mf_user');
+    const mfSession = Cookies.get(`mf_${window.mouseflow?.websiteId}`);
+    
+    return {
+      mfUser,
+      mfSession,
     };
   };
 })();
