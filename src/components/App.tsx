@@ -52,6 +52,23 @@ const App = function() {
     return null;
   }
 
+
+  // Check for null script
+  if (state.diagnostics.websiteId === null) {
+    return (
+      <div className="App">
+        <div className="container p-2">
+          <h6>Null script detected. Please check for the following:</h6>
+          <ul>
+            <li>Tracking paused for the account</li>
+            <li>Account is out of credits</li>
+            <li>Recording limit met for this website</li>
+          </ul>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="App">
       <div className="container p-2">
