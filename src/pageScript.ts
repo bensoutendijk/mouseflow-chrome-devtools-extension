@@ -16,7 +16,7 @@ import { MouseflowEventDetail, MouseflowEvent, MouseflowEventType, MouseflowDiag
       case MouseflowEventType.FETCH_WINDOW_GLOBALS:
         Object.assign(responseEvent.detail, {
           type: MouseflowEventType.RECEIVE_WINDOW_GLOBALS,
-          payload: getMouseflowVariables(),
+          payload: getMouseflowGlobals(),
         }),
         document.dispatchEvent(responseEvent);
         break;
@@ -53,7 +53,7 @@ import { MouseflowEventDetail, MouseflowEvent, MouseflowEventType, MouseflowDiag
     };
   };
 
-  const getMouseflowVariables = function(): Partial<MouseflowGlobals> {
+  const getMouseflowGlobals = function(): Partial<MouseflowGlobals> {
     return {
       mouseflowPath: window.mouseflowPath,
       mouseflowAutoStart: window.mouseflowAutoStart,
