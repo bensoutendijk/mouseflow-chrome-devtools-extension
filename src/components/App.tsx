@@ -66,6 +66,7 @@ const App = function() {
         <Header version={state.diagnostics.version} isInstalled={state.diagnostics.isInstalled} />
         {state.diagnostics.isInstalled ? (
           <div>
+            <CookiesAlerts cookies={state.diagnostics.cookies} />
             <DiagnosticsCard 
               isRecording={state.diagnostics.isRecording}
               recordingRate={state.diagnostics.recordingRate}
@@ -91,7 +92,6 @@ const App = function() {
             ) : (
               null
             )}
-            <CookiesAlerts cookies={state.diagnostics.cookies} />
           </div>
         ) : null}
       </div>
