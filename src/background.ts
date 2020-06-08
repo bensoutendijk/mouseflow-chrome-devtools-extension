@@ -13,11 +13,14 @@ chrome.runtime.onMessage.addListener(
       default:
         break;
     }
-    chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
-      const activeTab = tabs[0];
-      if (activeTab?.id) {
-        chrome.tabs.sendMessage(activeTab.id, message);
-      }
-    });
   },
 );
+
+setInterval(function() {
+  chrome.tabs.query({ currentWindow: true, active: true }, (tabs) => {
+    const activeTab = tabs[0];
+    if (activeTab && activeTab.id) {
+      chrome.tabs.sendMessage(activeTab.id, { type: MouseflowEventType.FETCH_DIAGNOSTICS });
+    }
+  });
+}, 500);

@@ -31,8 +31,6 @@ export interface MouseflowGlobals {
 export enum MouseflowEventType {
   FETCH_DIAGNOSTICS = "FETCH_DIAGNOSTICS",
   RECEIVE_DIAGNOSTICS = "RECEIVE_DIAGNOSTICS",
-  FETCH_WINDOW_GLOBALS = "FETCH_WINDOW_GLOBALS",
-  RECEIVE_WINDOW_GLOBALS = "RECEIVE_WINDOW_GLOBALS",
   START_SESSION = "START_SESSION",
   STOP_SESSION = "STOP_SESSION"
 }
@@ -44,11 +42,6 @@ export type MouseflowEventDetail = {
 } | {
   type: MouseflowEventType.RECEIVE_DIAGNOSTICS;
   payload: MouseflowDiagnostics;
-} | {
-  type: MouseflowEventType.FETCH_WINDOW_GLOBALS;
-} | {
-  type: MouseflowEventType.RECEIVE_WINDOW_GLOBALS;
-  payload: Partial<MouseflowGlobals>;
 } | {
   type: MouseflowEventType.STOP_SESSION;
 } | {
@@ -62,11 +55,10 @@ export interface MouseflowDiagnostics {
   recordingRate?: number;
   websiteId?: string;
   sessionId?: string;
-  domain: string;
-  mouseflowPath?: string;
   cookies: {
     [key: string]: string | undefined;
   };
+  globals: Partial<MouseflowGlobals>;
 }
 
 

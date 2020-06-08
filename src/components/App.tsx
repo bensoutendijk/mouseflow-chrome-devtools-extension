@@ -5,50 +5,41 @@ import DiagnosticsCard from './DiagnosticsCard';
 import { MouseflowEventDetail,
   MouseflowDiagnostics, 
   MouseflowEventType, 
-  MouseflowGlobals, 
 } from '../types';
 import CookiesAlerts from './CookiesAlerts';
 
 interface AppState {
   diagnostics?: MouseflowDiagnostics;
-  globals?: Partial<MouseflowGlobals>;
 }
 
 const App = function() {
   const [state, setState] = useState<AppState>({});
 
   useEffect(() => {
-    chrome.runtime.sendMessage({ type: MouseflowEventType.FETCH_DIAGNOSTICS });
-    chrome.runtime.sendMessage({ type: MouseflowEventType.FETCH_WINDOW_GLOBALS });
-  }, []);
-
-  useEffect(() => {
-    const eventHandler = function(response: MouseflowEventDetail) {
-      switch (response.type) {
-        case MouseflowEventType.RECEIVE_DIAGNOSTICS:
-          setState({
-            ...state,
-            diagnostics: response.payload,
-          });
-          break;
-        case MouseflowEventType.RECEIVE_WINDOW_GLOBALS:
-          setState({
-            ...state,
-            globals: response.payload,
-          });
-          break;
-        
-        default:
-          break;
-      }
+    const eventHandler = function(message: MouseflowEventDetail) {
+      chrome.tabs.query({ currentWindow: true, active: true }, function(tabs) {
+        const activeTab = tabs[0];
+        if (activeTab && activeTab.id) {
+          switch (message.type) {
+            case MouseflowEventType.RECEIVE_DIAGNOSTICS:
+              setState({
+                ...state,
+                diagnostics: message.payload,
+              });
+              break;
+            default:
+              break;
+          }
+        }
+      });
     };
 
     chrome.runtime.onMessage.addListener(eventHandler);
 
     return () => chrome.runtime.onMessage.removeListener(eventHandler);
-  });
+  }, []);
 
-  if (typeof state.diagnostics === 'undefined' || typeof state.globals === 'undefined') {
+  if (typeof state.diagnostics === 'undefined') {
     return null;
   }
 
@@ -81,18 +72,19 @@ const App = function() {
               websiteId={state.diagnostics.websiteId}
               sessionId={state.diagnostics.sessionId}
             />
-            {state.globals ? (
+            {state.diagnostics.globals ? (
               <div className="GlobalsCard card mb-4">
                 <div className="card-header">
                   <h5 className="m-0">Global Variables</h5>
                 </div>
                 <ul className="list-group list-group-flush">
-                  {Object.keys(state.globals).map((key) => {
-                    if (typeof state.globals === 'undefined') {
+                  {Object.keys(state.diagnostics.globals).map((key) => {
+                    const value = state.diagnostics?.globals[key];
+                    if (!value) {
                       return null;
                     }
 
-                    return (<li className="list-group-item">{`${key} = ${state.globals[key]}`}</li>);
+                    return (<li className="list-group-item">{`${key} = ${value}`}</li>);
                   })}
                 </ul>
               </div>

@@ -14,13 +14,6 @@ import { MouseflowEventDetail, MouseflowEvent, MouseflowEventType, MouseflowDiag
 
         document.dispatchEvent(responseEvent);
         break;
-      case MouseflowEventType.FETCH_WINDOW_GLOBALS:
-        Object.assign(responseEvent.detail, {
-          type: MouseflowEventType.RECEIVE_WINDOW_GLOBALS,
-          payload: getMouseflowGlobals(),
-        }),
-        document.dispatchEvent(responseEvent);
-        break;
       case MouseflowEventType.STOP_SESSION:
         window.mouseflow?.stopSession();
         Object.assign(responseEvent.detail, {
@@ -50,8 +43,8 @@ import { MouseflowEventDetail, MouseflowEvent, MouseflowEventType, MouseflowDiag
       recordingRate: window.mouseflow?.recordingRate,
       websiteId: window.mouseflow?.websiteId,
       sessionId: window.mouseflow?.getSessionId(),
-      domain: window.location.host,
       cookies: getMouseflowCookies(),
+      globals: getMouseflowGlobals(),
     };
   };
 
