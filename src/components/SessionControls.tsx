@@ -13,7 +13,12 @@ const SessionControls: React.FC<SessionControlsProps> = function({ isRecording }
     const message: MouseflowEventDetail = {
       type: MouseflowEventType.STOP_SESSION,
     };
-    chrome.runtime.sendMessage(message);
+    chrome.tabs.query({ currentWindow: true, active: true}, function(tabs) {
+      const activeTab = tabs[0];
+      if (activeTab && activeTab.id) {
+        chrome.tabs.sendMessage(activeTab.id, message);
+      }
+    });
   };
 
   const handleStartSession: React.MouseEventHandler = function(event) {
@@ -21,7 +26,12 @@ const SessionControls: React.FC<SessionControlsProps> = function({ isRecording }
     const message: MouseflowEventDetail = {
       type: MouseflowEventType.START_SESSION,
     };
-    chrome.runtime.sendMessage(message);
+    chrome.tabs.query({ currentWindow: true, active: true}, function(tabs) {
+      const activeTab = tabs[0];
+      if (activeTab && activeTab.id) {
+        chrome.tabs.sendMessage(activeTab.id, message);
+      }
+    });
   };
 
   return (
