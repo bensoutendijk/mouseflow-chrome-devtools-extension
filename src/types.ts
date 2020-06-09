@@ -59,6 +59,7 @@ export interface MouseflowDiagnostics {
     [key: string]: string | undefined;
   };
   globals: Partial<MouseflowGlobals>;
+  duplicateIds: string[];
 }
 
 

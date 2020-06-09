@@ -45,6 +45,7 @@ import { MouseflowEventDetail, MouseflowEvent, MouseflowEventType, MouseflowDiag
       sessionId: window.mouseflow?.getSessionId(),
       cookies: getMouseflowCookies(),
       globals: getMouseflowGlobals(),
+      duplicateIds: getDuplicateIds(),
     };
   };
 
@@ -95,6 +96,27 @@ import { MouseflowEventDetail, MouseflowEvent, MouseflowEventType, MouseflowDiag
       res.push(result[1]);
     });
 
+    return res;
+  };
+
+  const getDuplicateIds = function() {
+    const res: string[] = [];
+    const elements = document.querySelectorAll('[id]');
+    const ids = Array.from(elements).map((element) => element.id);
+    elements.forEach((element) => {
+      let count = 0;
+      if (element.id !== "") {
+        for (let i = 0; i < ids.length; i++) {
+          const id = ids[i];
+          if (id === element.id) {
+            count += 1;
+          }
+        }
+      }
+      if (count > 1) {
+        res.push(element.id);
+      }
+    });
     return res;
   };
 })();

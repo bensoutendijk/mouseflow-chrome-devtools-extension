@@ -114,7 +114,26 @@ const App = function() {
         <Header version={state.diagnostics.version} />
         <div>
           {state.diagnostics.installations.length > 1 ? (
-            <div className="alert alert-danger">More than one tracking code detected</div>
+            <div className="alert alert-danger">
+              More than one tracking code detected.
+              <ul>
+                {state.diagnostics.installations.map((id) => (
+                  <li>{id}</li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+          {state.diagnostics.duplicateIds.length > 0 ? (
+            <div className="alert alert-danger">
+              Duplicate HTML IDs found
+              <ul>
+                {state.diagnostics.duplicateIds
+                  .filter((value, index, self) => self.indexOf(value) === index)
+                  .map((id) => (
+                    <li>{id}</li>
+                  ))}
+              </ul>
+            </div>
           ) : null}
           <CookiesAlerts cookies={state.diagnostics.cookies} />
           <DiagnosticsCard 
