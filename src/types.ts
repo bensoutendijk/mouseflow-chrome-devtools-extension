@@ -49,7 +49,7 @@ export type MouseflowEventDetail = {
 };
 
 export interface MouseflowDiagnostics {
-  isInstalled: boolean;
+  installations: string[];
   version?: string;
   isRecording?: boolean;
   recordingRate?: number;

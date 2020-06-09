@@ -37,7 +37,7 @@ import { MouseflowEventDetail, MouseflowEvent, MouseflowEventType, MouseflowDiag
 
   const getDiagnostics = function(): MouseflowDiagnostics {
     return {
-      isInstalled: !!window.mouseflow,
+      installations: getInstallations(),
       version: window.mouseflow?.version,
       isRecording: window.mouseflow?.isRecording(),
       recordingRate: window.mouseflow?.recordingRate,
@@ -79,5 +79,22 @@ import { MouseflowEventDetail, MouseflowEvent, MouseflowEventType, MouseflowDiag
       mfUser,
       mfSession,
     };
+  };
+
+  const getInstallations = function() {
+    const res: string[] = [];
+    const regex = /^https:\/\/cdn\.mouseflow\.com\/projects\/(.*).js$/;
+    const scripts = document.querySelectorAll('script');
+
+    scripts.forEach((script) => {
+      const result = regex.exec(script.src);
+      
+      if (result === null) {
+        return;
+      }
+      res.push(result[1]);
+    });
+
+    return res;
   };
 })();

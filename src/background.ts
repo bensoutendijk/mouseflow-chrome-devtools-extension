@@ -4,7 +4,7 @@ chrome.runtime.onMessage.addListener(
   function(message: MouseflowEventDetail, sender, sendResponse) {
     switch (message.type) {
       case MouseflowEventType.RECEIVE_DIAGNOSTICS:
-        if (message.payload.isInstalled) {
+        if (message.payload.installations.length > 0) {
           chrome.browserAction.setIcon({path: 'assets/images/mf_active.png'});
         } else {
           chrome.browserAction.setIcon({path: 'assets/images/mf_inactive.png'});
