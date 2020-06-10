@@ -1,6 +1,6 @@
 {
   "name": "Mouseflow Support",
-  "version": "2.0.0",
+  "version": "2.0.38",
   "description": "Mouseflow Support Chrome Extension",
   "permissions": ["tabs", "activeTab", "storage"],
   "background": {
