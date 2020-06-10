@@ -1,4 +1,4 @@
 # mouseflow-support-chrome-extension
 Mouseflow Support Chrome Extension
 
-https://mouseflow.atlassian.net/wiki/spaces/ST/pages/25100331/Mouseflow+Product+Support+Chrome+Extension
+https://mouseflow.atlassian.net/browse/PS-1
