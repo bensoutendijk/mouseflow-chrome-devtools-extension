@@ -45,7 +45,7 @@ const DiagnosticsCard: React.FC<DiagnosticsCardProps> = function({ isRecording, 
         <li className="list-group-item">
           <SessionControls isRecording={!!isRecording} />
           <a 
-            className="btn btn-info"
+            className="btn btn-info d-flex"
             href={`https://app.mouseflow.com/websites/${websiteId}/recordings/${sessionId}/play`} 
             target="_blank"
           >
@@ -62,7 +62,7 @@ const DiagnosticsCard: React.FC<DiagnosticsCardProps> = function({ isRecording, 
             <div className="input-group-prepend">
               <span className="input-group-text">{`Website ID: `}</span>
             </div>
-            <input type="text" id="website-id" className="form-control" value={`${websiteId}`}/>
+            <input type="text" id="website-id" className="form-control" style={{ fontFamily: 'monospace' }} value={`${websiteId}`}/>
           </div>
           <button type="button" className="btn btn-secondary" onClick={copyInput} data-target="website-id">Copy</button>
         </li>
@@ -71,7 +71,7 @@ const DiagnosticsCard: React.FC<DiagnosticsCardProps> = function({ isRecording, 
             <div className="input-group-prepend">
               <span className="input-group-text">{`Session ID: `}</span>
             </div>
-            <input type="text" id="session-id" className="form-control" value={`${sessionId}`}/>
+            <input type="text" id="session-id" className="form-control" style={{ fontFamily: 'monospace' }} value={`${sessionId}`}/>
           </div>
           <button type="button" className="btn btn-secondary" onClick={copyInput} data-target="session-id">Copy</button>
         </li>

@@ -5,13 +5,13 @@ import { MouseflowEventDetail, MouseflowEvent, MouseflowEventType, MouseflowDiag
 (function() {
   document.addEventListener('mouseflow', function (requestEvent: MouseflowEvent) {
     const responseEvent = new CustomEvent<MouseflowEventDetail | unknown >('mouseflow', { detail: {} });
+
     switch (requestEvent.detail.type) {
       case MouseflowEventType.FETCH_DIAGNOSTICS:
         Object.assign(responseEvent.detail, {
           type: MouseflowEventType.RECEIVE_DIAGNOSTICS,
           payload: getDiagnostics(),
         }),
-
         document.dispatchEvent(responseEvent);
         break;
       case MouseflowEventType.STOP_SESSION:
@@ -46,6 +46,7 @@ import { MouseflowEventDetail, MouseflowEvent, MouseflowEventType, MouseflowDiag
       cookies: getMouseflowCookies(),
       globals: getMouseflowGlobals(),
       duplicateIds: getDuplicateIds(),
+      HTMLErrors: validateHTML(),
     };
   };
 
@@ -95,7 +96,6 @@ import { MouseflowEventDetail, MouseflowEvent, MouseflowEventType, MouseflowDiag
       }
       res.push(result[1]);
     });
-
     return res;
   };
 
@@ -103,6 +103,7 @@ import { MouseflowEventDetail, MouseflowEvent, MouseflowEventType, MouseflowDiag
     const res: string[] = [];
     const elements = document.querySelectorAll('[id]');
     const ids = Array.from(elements).map((element) => element.id);
+
     elements.forEach((element) => {
       let count = 0;
       if (element.id !== "") {
@@ -117,6 +118,16 @@ import { MouseflowEventDetail, MouseflowEvent, MouseflowEventType, MouseflowDiag
         res.push(element.id);
       }
     });
+    return res;
+  };
+
+  const validateHTML = function() {
+    const res = [];
+    const nestedClickableElements = document.querySelectorAll('a a');
+
+    if (nestedClickableElements.length) {
+      res.push('Nested clickable elements detected.');
+    }
     return res;
   };
 })();

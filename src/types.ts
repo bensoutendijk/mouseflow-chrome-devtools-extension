@@ -60,6 +60,7 @@ export interface MouseflowDiagnostics {
   };
   globals: Partial<MouseflowGlobals>;
   duplicateIds: string[];
+  HTMLErrors: string[];
 }
 
 
